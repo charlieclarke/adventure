@@ -1,12 +1,16 @@
-#!/usr/bin/perl
+#!/opt/local/bin/perl
 #
 #
 
 use DBI;
+use Config::Simple;
+
+my $cfg = new Config::Simple('config.local');
+my $db_location = $cfg->param('database.databasepath');
 
 my $ACTIONTYPE_OUTBOUNDMP3_RESPAWN = 1;
 
-my $db = DBI->connect("dbi:SQLite:/var/tmp/timeline.db", "", "",
+my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
 $db->do("DROP TABLE IF EXISTS Thread");

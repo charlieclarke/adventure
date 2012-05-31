@@ -13,17 +13,31 @@ my $ACTION_PLAY_MP3_RESPWAN = 1;
 my $ACTION_PLAY_MP3_NORESPAWN = 2;
 my $ACTION_GENERATE_PLAY_MP3 = 3;
 
+
+#sort out configs
+use Config::Simple;
+
+my $cfg = new Config::Simple('config.local');
+my $db_location = $cfg->param('database.databasepath');
+
+my $twilio_account_sid = $cfg->param('twilio.twilioAcountSid');
+my $twilio_auth_token = $cfg->param('twilio.twilioAuthToken');
+my $twilio_from_number = $cfg->param('twilio.twilioFromNumber');
+my $php_server = $cfg->param('web.phpServer');
+
+print "db location from config = $db_location\n";
+
+my $sharedsecret=$cfg->param('web.sharedSecret');
+
 #initialize connection to twilio - remember to put in the correct credentials
 
-my $twilio = WWW::Twilio::API->new(AccountSid => 'AC935d979c7df9408287fd1f2e11d7c7ed',
-                                     AuthToken  => '0efda38d6f53fea7fae814d64666e597');
-my $twilio_from_number = '+44 20 7183 9873';
+my $twilio = WWW::Twilio::API->new(AccountSid => $twilio_account_sid,
+                                     AuthToken  => $twilio_auth_token);
 
 
 #initialize local database for tracking of timeline etc.
-my $sharedsecret="12345abcdefg";
 
-my $db = DBI->connect("dbi:SQLite:/var/tmp/timeline.db", "", "",
+my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
 $time_now = DateTime->now;
@@ -232,7 +246,7 @@ sub outbound_mp3_call {
 	my ($destNumber, $threadID) = @_;
 
 	print "CALLING $destNumber due to thread $threadID \n";
-	$url = "http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/timeline-caller.php?threadID=${threadID}&secret=${sharedsecret}";
+	$url = $php_server . "timeline-caller.php?threadID=${threadID}&secret=${sharedsecret}";
 	print "URL: $url\n";
 	
 
