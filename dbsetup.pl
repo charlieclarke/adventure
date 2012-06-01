@@ -4,8 +4,19 @@
 
 use DBI;
 use Config::Simple;
+my $hostname = `/bin/hostname`;
+print "got hostname of $hostname\n";
+if ($hostname =~ /local/) {
+        $configlocation = "/var/tmp/config.local";
+} else {
+        $configlocation = "/var/cache/timeline/config.local";
+}
+#sort out configs
+use Config::Simple;
 
-my $cfg = new Config::Simple('config.local');
+my $cfg = new Config::Simple($configlocation);
+
+
 my $db_location = $cfg->param('database.databasepath');
 
 my $ACTIONTYPE_OUTBOUNDMP3_RESPAWN = 1;

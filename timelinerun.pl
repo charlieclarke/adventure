@@ -13,11 +13,17 @@ my $ACTION_PLAY_MP3_RESPWAN = 1;
 my $ACTION_PLAY_MP3_NORESPAWN = 2;
 my $ACTION_GENERATE_PLAY_MP3 = 3;
 
-
+my $hostname = `/bin/hostname`;
+print "got hostname of $hostname\n";
+if ($hostname =~ /local/) {
+	$configlocation = "/var/tmp/config.local";
+} else {
+	$configlocation = "/var/cache/timeline/config.local";
+}
 #sort out configs
 use Config::Simple;
 
-my $cfg = new Config::Simple('config.local');
+my $cfg = new Config::Simple($configlocation);
 my $db_location = $cfg->param('database.databasepath');
 
 my $twilio_account_sid = $cfg->param('twilio.twilioAcountSid');
