@@ -15,7 +15,11 @@ my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 
 $db->do("DROP TABLE IF EXISTS Thread");
 $db->do("DROP TABLE IF EXISTS Action");
+$db->do("DROP TABLE IF EXISTS Number");
 $db->do("CREATE TABLE Thread (id INTEGER PRIMARY KEY, ThreadDescription TEXT, ActionType INTEGER, DestNumber TEXT, mp3Name TEXT, StartTimeHour INTEGER, StartTimeMinute INTEGER, StopTimeHour INTEGER, StopTimeMinute INTEGER, FrequencyMinutes TEXT, ChildThreadID TEXT)");
+$db->do("CREATE TABLE Number (NumberID INTEGER PRIMARY KEY, NumberDescription TEXT, Number TEXT)");
+
+$db->do("INSERT INTO Number VALUES (1,'charlie''s phone', '+44 7971 805 821')");
 
 $db->do("CREATE TABLE Action (ActionTypeID INTEGER PRIMARY KEY, ActionName TEXT, MinutesBeforeText TEXT, MinutesAfterText TEXT, Description TEXT)");
 

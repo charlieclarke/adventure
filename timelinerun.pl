@@ -142,6 +142,8 @@ sub run_timeline {
 					outbound_mp3_call($destNumber, $threadID);
 				} elsif ($actionType eq 3) {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
+				} elsif ($actionType eq 4) {
+					outbound_sms($destNumber, $mp3Name);
 				}
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -251,7 +253,7 @@ sub outbound_mp3_call {
 	print "URL: $url\n";
 	
 
-	my $call = 1;
+	my $call = 0;
 	if ($call eq 1) {
 		$response = $twilio->POST( 'Calls',
 					 From => $twilio_from_number,
@@ -263,5 +265,19 @@ sub outbound_mp3_call {
 
 }
 
+sub outbound_sms {
+	my ($destNumber, $message) = @_;
 
+	print "send SMS $message from $twilio_from_number to $destNumber\n";
+	my $sms = 1;
+	if ($sms eq 1) {
+
+		$response = $twilio->POST('SMS/Messages',
+                            From => $twilio_from_number,
+                            To   => $destNumber,
+                            Body => $message );
+
+		print $response->{content};
+	}
+}
 
