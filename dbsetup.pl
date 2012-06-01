@@ -25,7 +25,7 @@ $db->do("INSERT INTO Action VALUES (3,'Generate Call List', 'Insert at (',') min
 $db->do("INSERT INTO Action VALUES (4,'Send SMS', 'Wait ',' minutes after a spawn','This action sends an SMS to the specified number. The mp3name is the text of the SMS. If the SMS is spawned as a child, the child will be spawned with an offset of &lt;frequency&rt; minutes.')");
 
 $db->do("INSERT INTO Thread VALUES (1, 'repeat call Charlies phone', 1,'+447971805821','test.mp3',0,0,23,59,20,4)");
-$db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'+447971805821','test.mp3',0,0,23,59,0,0)");
+$db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'+447971805821','hello.mp3',0,0,23,59,0,0)");
 $db->do("INSERT INTO Thread VALUES (3, 'multi call charlies phone', 3,'+447971805821','test.mp3',6,0,18,59,'0,15,30,45',2)");
 $db->do("INSERT INTO Thread VALUES (4, '1 off call - as response to a pickup', 2,'+447971805821','pickup.mp3',6,0,18,59,10,0)");
 my $all = $db->selectall_arrayref("SELECT * FROM Thread");
