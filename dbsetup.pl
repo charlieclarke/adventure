@@ -16,9 +16,10 @@ my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 $db->do("DROP TABLE IF EXISTS Thread");
 $db->do("CREATE TABLE Thread (id INTEGER PRIMARY KEY, ThreadDescription TEXT, ActionType INTEGER, DestNumber TEXT, mp3Name TEXT, StartTimeHour INTEGER, StartTimeMinute INTEGER, StopTimeHour INTEGER, StopTimeMinute INTEGER, FrequencyMinutes TEXT, ChildThreadID TEXT)");
 
-$db->do("INSERT INTO Thread VALUES (1, 'repeat call Charlies phone', 1,'+447971805821','test.mp3',0,0,23,59,20,0)");
+$db->do("INSERT INTO Thread VALUES (1, 'repeat call Charlies phone', 1,'+447971805821','test.mp3',0,0,23,59,20,4)");
 $db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'+447971805821','test.mp3',0,0,23,59,0,0)");
 $db->do("INSERT INTO Thread VALUES (3, 'multi call charlies phone', 3,'+447971805821','test.mp3',6,0,18,59,'0,15,30,45',2)");
+$db->do("INSERT INTO Thread VALUES (4, '1 off call - as response to a pickup', 2,'+447971805821','pickup.mp3',6,0,18,59,10,0)");
 my $all = $db->selectall_arrayref("SELECT * FROM Thread");
 
 
