@@ -24,6 +24,7 @@ my $twilio_account_sid = $cfg->param('twilio.twilioAcountSid');
 my $twilio_auth_token = $cfg->param('twilio.twilioAuthToken');
 my $twilio_from_number = $cfg->param('twilio.twilioFromNumber');
 my $php_server = $cfg->param('web.phpServer');
+print "php server is $php_server\n";
 
 print "db location from config = $db_location\n";
 
@@ -44,7 +45,7 @@ $time_now = DateTime->now;
 $time_now_sqllite  = DateTime::Format::SQLite->format_datetime($time_now);
 
 print_timeline();
-init();
+#init();
 print_timeline();
 
 sync_time();
@@ -250,7 +251,7 @@ sub outbound_mp3_call {
 	print "URL: $url\n";
 	
 
-	my $call = 0;
+	my $call = 1;
 	if ($call eq 1) {
 		$response = $twilio->POST( 'Calls',
 					 From => $twilio_from_number,
