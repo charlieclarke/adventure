@@ -241,12 +241,18 @@ sub outbound_mp3_call_respawn {
 	#make the phone call using twilio API
 	outbound_mp3_call($destNumber, $threadID);
 
-	$respawn_time = $time_now->add(minutes=>$frequency);
+	if ($frequency > 0) {
+
+		$respawn_time = $time_now->add(minutes=>$frequency);
 
 
-	$respawn_time_sqllite = DateTime::Format::SQLite->format_datetime($respawn_time);
+		$respawn_time_sqllite = DateTime::Format::SQLite->format_datetime($respawn_time);
 
-	insert_timeline($threadID, $respawn_time, "autogen child of ($id)");
+		insert_timeline($threadID, $respawn_time, "autogen child of ($id)");
+	} else {
+		#you cannot have a respawn of 0 - causes an expensive infinite loop
+		print "respawn is bad with freq 0\n";
+	}
 
 
 }
