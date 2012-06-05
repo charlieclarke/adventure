@@ -303,7 +303,7 @@ sub outbound_mp3_call {
 	print "URL: $url\n";
 	
 
-	my $call = 0;
+	my $call = 1;
 	if ($call eq 1) {
 		$response = $twilio->POST( 'Calls',
 					 From => $twilio_from_number,
