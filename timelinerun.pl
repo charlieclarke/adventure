@@ -142,14 +142,14 @@ sub run_timeline {
 				print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name\n";
 
 				if ($actionType eq 1) {
-					outbound_mp3_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency);
+					outbound_mp3_group_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency);
 
 				} elsif ($actionType eq 2) {
-					outbound_mp3_call($destNumber, $threadID);
+					outbound_mp3_group_call($destNumber, $threadID);
 				} elsif ($actionType eq 3) {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
 				} elsif ($actionType eq 4) {
-					outbound_sms($destNumber, $mp3Name);
+					outbound_group_sms($destNumber, $mp3Name);
 				}
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -232,13 +232,30 @@ sub generate_items {
 
 }
 
-sub outbound_mp3_call_respawn {
+sub outbound_mp3_group_call_respawn {
 
-	my ($id, $threadID, $destNumber, $mp3Name, $frequency) = @_;
-	print "MAKE CALL: $destNumber, $mp3Name\n";
+	my ($id, $threadID, $destGroupID, $mp3Name, $frequency) = @_;
+	print "MAKE CALL: $destGroupID, $mp3Name\n";
 
 
-	#make the phone call using twilio API
+	#get the numbers in the group
+
+
+	print "making group call to group id $destGroupID\n";
+         my $all = $db->selectall_arrayref("select Number from GroupNumber, Number where GNNumberID = Number.NumberID and GNGroupID = " . $destGroupID);
+
+
+        foreach my $row (@$all) {
+                my ($destNumber) = @$row;
+
+		#make the phone call using twilio API
+		outbound_mp3_call($destNumber, $threadID);
+
+        }
+
+
+	
+	
 	outbound_mp3_call($destNumber, $threadID);
 
 	if ($frequency > 0) {
@@ -257,6 +274,27 @@ sub outbound_mp3_call_respawn {
 
 }
 
+sub outbound_mp3_group_call {
+
+	my ($destGroupID, $threadID) = @_;
+
+	#get the numbers in the group
+
+	print "making group mp3 call to group id $destGroupID\n";
+
+         my $all = $db->selectall_arrayref("select Number from GroupNumber, Number where GNNumberID = Number.NumberID and GNGroupID = " . $destGroupID);
+
+
+        foreach my $row (@$all) {
+                my ($destNumber) = @$row;
+
+                #make the phone call using twilio API
+                outbound_mp3_call($destNumber, $threadID);
+
+        }
+
+
+}
 sub outbound_mp3_call {
 	my ($destNumber, $threadID) = @_;
 
@@ -274,6 +312,29 @@ sub outbound_mp3_call {
 
 		print $response->{content};
 	}
+
+}
+
+sub outbound_group_sms {
+
+	 my ($destGroupID, $message) = @_;
+
+        #get the numbers in the group
+
+
+
+	 print "making group SMS to group id $destGroupID\n";
+	 my $all = $db->selectall_arrayref("select Number from GroupNumber, Number where GNNumberID = Number.NumberID and GNGroupID = " . $destGroupID);
+
+
+        foreach my $row (@$all) {
+                my ($destNumber) = @$row;
+
+                #make the phone call using twilio API
+                outbound_sms($destNumber, $message);
+
+        }
+	
 
 }
 
