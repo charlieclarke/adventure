@@ -53,6 +53,7 @@ $db->do("INSERT INTO Action VALUES (2,'One-off Call', 'Wait ',' minutes after a 
 $db->do("INSERT INTO Action VALUES (3,'Generate Call List', 'Insert at (',') minutes past the hour','This action generate threads starting at the specified minutes past the hour. The minutes are set using the &lt;frequency&rt; field as a comma-searated list')");;
 $db->do("INSERT INTO Action VALUES (4,'Send SMS', 'Wait ',' minutes after a spawn','This action sends an SMS to the specified number. The mp3name is the text of the SMS. If the SMS is spawned as a child, the child will be spawned with an offset of &lt;frequency&rt; minutes.')");
 $db->do("INSERT INTO Action VALUES (5,'Inbound Call Text Reply', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming call - it will play the text using text2speech.')");
+$db->do("INSERT INTO Action VALUES (6,'Inbound Call MP3 Reply', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming call - it will play the mp3 file.')");
 
 $db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'1','hello.mp3',0,0,23,59,0,0)");
 $db->do("INSERT INTO Thread VALUES (1, 'default inbound behaviour', 5,'1','hello [InboundName]',0,0,23,59,0,0)");
