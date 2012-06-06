@@ -25,6 +25,7 @@ my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
 $db->do("DROP TABLE IF EXISTS Thread");
+$db->do("DROP TABLE IF EXISTS HeartBeat");
 $db->do("DROP TABLE IF EXISTS Action");
 $db->do("DROP TABLE IF EXISTS Number");
 $db->do("DROP TABLE IF EXISTS Groups");
