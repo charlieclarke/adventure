@@ -101,9 +101,9 @@ sub mark_timeline_complete {
 sub insert_timeline {
 	my ($threadID, $startTime, $comm) = @_;
 
-	my $sth = $db->prepare("INSERT INTO TimeLine VALUES (?,?,?,?,?,?,?)");
+	my $sth = $db->prepare("INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,?,?,?,?,?,0)");
 	my $startTimeSqllite = DateTime::Format::SQLite->format_datetime($startTime);
-	$sth->execute(undef, $threadID, $startTimeSqllite, 0, undef, $comm,undef);
+	$sth->execute($threadID, $startTimeSqllite, 0, undef, $comm,undef);
 
 }
 
@@ -126,7 +126,7 @@ sub print_timeline {
 sub run_timeline {
 
 
-	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID from TimeLine, Thread where TimeLine.Completed = 0 and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id order by TimeLine.ActivityTime");
+	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number from TimeLine, Thread,Number where TimeLine.Completed = 0 and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
 
 	my $hbSql = $db->prepare("update HeartBeat set HeartBeatTime = DateTime('now') where HeartBeatName='LastTimeLine'");
 
@@ -143,7 +143,7 @@ sub run_timeline {
 		if (scalar(@$all) > 0) {
 			print "\n";
 			foreach my $row (@$all) {
-				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID) = @$row;
+				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID,$additionalNumberID, $additionalNumber) = @$row;
 
 				print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name\n";
 
@@ -156,7 +156,12 @@ sub run_timeline {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
 				} elsif ($actionType eq 4) {
 					outbound_group_sms($destNumber, $mp3Name,$id,$threadID);
-				}
+				} elsif ($actionType eq 7) {
+                                        outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID);
+				} elsif ($actionType eq 8) {
+					#place sms to the additional number
+					outbound_sms ($additionalNumber, $mp3name,$id,$additionalNumberID,$threadID);
+                                }
 				
 				mark_timeline_complete($id,"finished OK");	
 
@@ -300,12 +305,31 @@ sub outbound_mp3_group_call {
 
 
 }
+
+sub outbound_callback_mp3 {
+
+	my ($additionalNumberID, $additionalNumber, $mp3Name,$timeLineID,$threadID) = @_;
+
+	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $additionalNumberID, $response->{content}, 'call not sent');
+        print "PLACE CALLBACK: calltrackID = $callTrackID\n";
+
+
+	place_mp3_call($additionalNumber, $threadID, $callTrackID);
+
+
+}
 sub outbound_mp3_call {
 	my ($destNumber, $threadID,$timeLineID,$numberID) = @_;
 
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'call not sent');
         print "calltrackID = $callTrackID\n";
 
+	place_mp3_call($destNumber, $threadID, $callTrackID);
+
+}
+
+sub place_mp3_call {
+	my ($destNumber, $threadID, $callTrackID) = @_;
 
 
 	print "CALLING $destNumber due to thread $threadID \n";

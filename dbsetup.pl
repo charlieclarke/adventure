@@ -40,10 +40,12 @@ $db->do("insert into HeartBeat values('LastTimeLine',DATETIME('now'))");
 
 $db->do("CREATE TABLE Number (NumberID INTEGER PRIMARY KEY, NumberDescription TEXT, Number TEXT)");
 
-$db->do("INSERT INTO Number VALUES (1,'charlie''s phone', '+447971805821')");
+$db->do("INSERT INTO Number VALUES (1,'charlie clarke', '+447971805821')");
+$db->do("INSERT INTO Number VALUES (0,'null numbner', '+44')");
 
 $db->do("CREATE TABLE Groups (GroupID INTEGER PRIMARY KEY, GroupName TEXT)");
 $db->do("INSERT INTO Groups VALUES (1,'just charlie')");
+$db->do("INSERT INTO Groups VALUES (0,'null group')");
 
 $db->do("CREATE TABLE DefaultInboundThread (ThreadID INTEGER) ");
 $db->do("INSERT INTO  DefaultInboundThread values (1) ");
@@ -59,6 +61,8 @@ $db->do("INSERT INTO Action VALUES (3,'Generate Call List', 'Insert at (',') min
 $db->do("INSERT INTO Action VALUES (4,'Send SMS', 'Wait ',' minutes after a spawn','This action sends an SMS to the specified number. The mp3name is the text of the SMS. If the SMS is spawned as a child, the child will be spawned with an offset of &lt;frequency&rt; minutes.')");
 $db->do("INSERT INTO Action VALUES (5,'Inbound Call Text Reply', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming call - it will play the text using text2speech.')");
 $db->do("INSERT INTO Action VALUES (6,'Inbound Call MP3 Reply', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming call - it will play the mp3 file.')");
+$db->do("INSERT INTO Action VALUES (7,'CallBack MP3 Thread', 'wait ',' minutes until callback ','this action describes a callback from an incoming call. The number called will be the incoming number.')");
+$db->do("INSERT INTO Action VALUES (8,'CallBack SMS Thread', 'wait ',' minutes until SMS callback ','this action describes a callback SMS from an incoming call/SMS. The number SMSd  will be the incoming number.')");
 
 $db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'1','hello.mp3',0,0,23,59,0,0)");
 $db->do("INSERT INTO Thread VALUES (1, 'default inbound behaviour', 5,'1','hello [InboundName]',0,0,23,59,0,0)");
@@ -66,7 +70,7 @@ my $all = $db->selectall_arrayref("SELECT * FROM Thread");
 
 
 $db->do("DROP TABLE IF EXISTS TimeLine");
-$db->do("CREATE TABLE TimeLine (id INTEGER PRIMARY KEY, ThreadId INTEGER, ActivityTime DATETIME, Completed INTEGER, CompletedTime DATETIME, Description TEXT, Notes TEXT)");
+$db->do("CREATE TABLE TimeLine (id INTEGER PRIMARY KEY, ThreadId INTEGER, ActivityTime DATETIME, Completed INTEGER, CompletedTime DATETIME, Description TEXT, Notes TEXT, AdditionalNumberID INTEGER)");
 
 
 foreach my $row (@$all) {
