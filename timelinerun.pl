@@ -128,8 +128,14 @@ sub run_timeline {
 
 	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID from TimeLine, Thread where TimeLine.Completed = 0 and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id order by TimeLine.ActivityTime");
 
+	my $hbSql = $db->prepare("update HeartBeat set HeartBeatTime = DateTime('now') where HeartBeatName='LastTimeLine'");
+
+	
 
 	while(1) {
+
+		$hbSql->execute();
+		
 		$sth->execute($time_now_sqllite);
 
 		my $all = $sth->fetchall_arrayref();

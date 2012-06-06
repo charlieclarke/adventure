@@ -33,6 +33,10 @@ $db->do("DROP TABLE IF EXISTS CallTrack");
 $db->do("DROP TABLE IF EXISTS DefaultInboundThread");
 $db->do("CREATE TABLE Thread (id INTEGER PRIMARY KEY, ThreadDescription TEXT, ActionType INTEGER, DestNumber INTEGER, mp3Name TEXT, StartTimeHour INTEGER, StartTimeMinute INTEGER, StopTimeHour INTEGER, StopTimeMinute INTEGER, FrequencyMinutes TEXT, ChildThreadID TEXT)");
 $db->do("CREATE TABLE CallTrack (TrackID INTEGER PRIMARY KEY, IsOutbound INTEGER, ThreadID INTEGER, TrackNumberID INTEGER, TimeLineID INTEGER, TrackTime DATETIME, TwilioID TEXT, TwilioFollowup INTEGER, StatusText TEXT, InboundDetails TEXT)");
+$db->do("CREATE TABLE HeartBeat (HeartBeatName TEXT, HeartBeatTime DATETIME)");
+$db->do("insert into HeartBeat values('LastTimeLine',DATETIME('now'))");
+
+
 $db->do("CREATE TABLE Number (NumberID INTEGER PRIMARY KEY, NumberDescription TEXT, Number TEXT)");
 
 $db->do("INSERT INTO Number VALUES (1,'charlie''s phone', '+447971805821')");
