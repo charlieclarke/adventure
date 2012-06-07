@@ -160,7 +160,7 @@ sub run_timeline {
                                         outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID);
 				} elsif ($actionType eq 8) {
 					#place sms to the additional number
-					outbound_sms ($additionalNumber, $mp3name,$id,$additionalNumberID,$threadID);
+					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID);
                                 }
 				
 				mark_timeline_complete($id,"finished OK");	
