@@ -47,8 +47,9 @@ $db->do("CREATE TABLE Groups (GroupID INTEGER PRIMARY KEY, GroupName TEXT)");
 $db->do("INSERT INTO Groups VALUES (1,'just charlie')");
 $db->do("INSERT INTO Groups VALUES (0,'null group')");
 
-$db->do("CREATE TABLE DefaultInboundThread (ThreadID INTEGER) ");
-$db->do("INSERT INTO  DefaultInboundThread values (1) ");
+$db->do("CREATE TABLE DefaultInboundThread (Type TEXT, ThreadID INTEGER) ");
+$db->do("INSERT INTO  DefaultInboundThread values ('CALL',1) ");
+$db->do("INSERT INTO  DefaultInboundThread values ('SMS',2) ");
 
 $db->do("CREATE TABLE GroupNumber (GroupNumberID INTEGER PRIMARY KEY, GNGroupID INTEGER, GNNumberID INTEGER)");
 $db->do("INSERT INTO GroupNumber VALUES (1,1,1)");
@@ -63,9 +64,11 @@ $db->do("INSERT INTO Action VALUES (5,'Inbound Call Text Reply', 'Number is irre
 $db->do("INSERT INTO Action VALUES (6,'Inbound Call MP3 Reply', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming call - it will play the mp3 file.')");
 $db->do("INSERT INTO Action VALUES (7,'CallBack MP3 Thread', 'wait ',' minutes until callback ','this action describes a callback from an incoming call. The number called will be the incoming number.')");
 $db->do("INSERT INTO Action VALUES (8,'CallBack SMS Thread', 'wait ',' minutes until SMS callback ','this action describes a callback SMS from an incoming call/SMS. The number SMSd  will be the incoming number.')");
+$db->do("INSERT INTO Action VALUES (9,'Inbound SMS', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming sms. if the mp3/message field is not blank, then the child threads will only be spawned IF the text is found in the message')");
 
-$db->do("INSERT INTO Thread VALUES (2, '1 off call Charlies Phone', 2,'1','hello.mp3',0,0,23,59,0,0)");
-$db->do("INSERT INTO Thread VALUES (1, 'default inbound behaviour', 5,'1','hello [InboundName]',0,0,23,59,0,0)");
+$db->do("INSERT INTO Thread VALUES (3, '1 off call Charlies Phone', 2,'1','hello.mp3',0,0,23,59,0,0)");
+$db->do("INSERT INTO Thread VALUES (1, 'default inbound call behaviour', 5,'1','hello [InboundName]',0,0,23,59,0,0)");
+$db->do("INSERT INTO Thread VALUES (2, 'default inbound SMS behaviour', 8,'1','',0,0,23,59,0,0)");
 my $all = $db->selectall_arrayref("SELECT * FROM Thread");
 
 
