@@ -42,6 +42,9 @@ my $twilio = WWW::Twilio::API->new(AccountSid => $twilio_account_sid,
                                      AuthToken  => $twilio_auth_token);
 
 
+$internationalPhoneRegion = '+44';
+
+
 #initialize local database for tracking of timeline etc.
 
 my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
@@ -263,9 +266,6 @@ sub outbound_mp3_group_call_respawn {
                  outbound_mp3_call($destNumber, $threadID,$id,$numberID);
 
         }
-
-
-	
 	
 
 	if ($frequency > 0) {
@@ -337,16 +337,23 @@ sub place_mp3_call {
 	print "URL: $url\n";
 	
 
-	my $call = 1;
-	if ($call eq 1) {
-		$response = $twilio->POST( 'Calls',
-					 From => $twilio_from_number,
-				      To   => $destNumber,
-					   Url  => $url );
+	if (is_number_within_region($destNumber)) { 
+		my $call = 1;
+		if ($call eq 1) {
+			$response = $twilio->POST( 'Calls',
+						 From => $twilio_from_number,
+					      To   => $destNumber,
+						   Url  => $url );
 
-		print $response->{content};
-		update_calltrack_twilio($callTrackID, $response->{content}, 'Call sent');
+			print $response->{content};
+			update_calltrack_twilio($callTrackID, $response->{content}, 'Call sent');
+		}
+		} else {
+
+		update_calltrack_twilio($callTrackID, $response->{content}, 'Call not sent - number not in region');
+
 	}
+
 
 }
 
@@ -373,6 +380,22 @@ sub outbound_group_sms {
 
 }
 
+
+sub is_number_within_region {
+
+        my ($number) = @_;
+
+	my $numberRegEx = $internationalPhoneRegion;
+	$numberRegEx =~ s/\+/\\+/;
+	print $numberRegEx . "\n";
+
+        return $number =~ /^$numberRegEx/;
+
+
+}
+
+
+
 sub outbound_sms {
 	my ($destNumber, $message,$timeLineID,$numberID,$threadID) = @_;
 
@@ -380,18 +403,22 @@ sub outbound_sms {
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'SMS not sent');
 	print "calltrackID = $callTrackID\n";
 
-	my $sms = 1;
-	if ($sms eq 1) {
+	if (is_number_within_region($destNumber)) {
+		my $sms = 1;
+		if ($sms eq 1) {
 
-		$response = $twilio->POST('SMS/Messages',
-                            From => $twilio_from_number,
-                            To   => $destNumber,
-                            Body => $message );
+			$response = $twilio->POST('SMS/Messages',
+				    From => $twilio_from_number,
+				    To   => $destNumber,
+				    Body => $message );
 
-		print $response->{content};
+			print $response->{content};
 
-		update_calltrack_twilio($callTrackID, $response->{content}, 'SMS sent');
+			update_calltrack_twilio($callTrackID, $response->{content}, 'SMS sent');
 
+		}
+	} else {
+		update_calltrack_twilio($callTrackID, $response->{content}, 'SMS not sent - number not in region');
 	}
 }
 sub insert_new_calltrack {
