@@ -111,10 +111,14 @@ sub insert_timeline {
 }
 
 sub insert_timeline_offset {
-        my ($threadID, $offset, $comm) = @_;
+        my ($threadID, $offset, $comm,$additionalNumberID) = @_;
+	my $sql = "INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+$offset minutes'),?,?,?,?,?)";	
 
-        my $sth = $db->prepare("INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+$offset minutes'),?,?,?,?,0)");
-        $sth->execute($threadID,  0, undef, $comm,undef);
+
+	print "sq; is $sql\n";
+
+        my $sth = $db->prepare($sql);
+        $sth->execute($threadID,  0, undef, $comm,undef,$additionalNumberID);
 
 }
 
@@ -165,12 +169,12 @@ sub run_timeline {
 				} elsif ($actionType eq 3) {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
 				} elsif ($actionType eq 4) {
-					outbound_group_sms($destNumber, $mp3Name,$id,$threadID,$childThreadID);
+					outbound_group_sms($destNumber, $mp3Name,$id,$threadID,$childThreadID,$additionalNumberID);
 				} elsif ($actionType eq 7) {
                                         outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID);
 				} elsif ($actionType eq 8) {
 					#place sms to the additional number
-					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID);
+					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1);
                                 }
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -366,7 +370,7 @@ sub place_mp3_call {
 
 sub outbound_group_sms {
 
-	 my ($destGroupID, $message, $timeLineID,$threadID,$childThreadID) = @_;
+	 my ($destGroupID, $message, $timeLineID,$threadID,$childThreadID,$additionalNumberID) = @_;
 
         #get the numbers in the group
 
@@ -380,7 +384,7 @@ sub outbound_group_sms {
                 my ($destNumber, $destNumberID) = @$row;
 
                 #make the phone call using twilio API
-                outbound_sms($destNumber, $message, $timeLineID, $destNumberID,$threadID);
+                outbound_sms($destNumber, $message, $timeLineID, $destNumberID,$threadID,$childThreadID,0);
 
         }
 
@@ -397,7 +401,7 @@ sub outbound_group_sms {
 			 my ($freq) = @$row;
 
 		
-			insert_timeline_offset($childID, $freq , "inserted as child of SMS thread $threadID");
+			insert_timeline_offset($childID, $freq , "inserted as child of SMS thread $threadID",$additionalNumberID);
 
 		}
 
@@ -423,7 +427,7 @@ sub is_number_within_region {
 
 
 sub outbound_sms {
-	my ($destNumber, $message,$timeLineID,$numberID,$threadID) = @_;
+	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild) = @_;
 
 	print "send SMS $message from $twilio_from_number to $destNumber\n";
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'SMS not sent');
@@ -445,6 +449,22 @@ sub outbound_sms {
 		}
 	} else {
 		update_calltrack_twilio($callTrackID, $response->{content}, 'SMS not sent - number not in region');
+	}
+
+	if ($spawnChild > 0) {
+
+		#now we have to add any child threads
+		@childThreadIDs = split (/,/,$childThreadID);
+		foreach my $childID (@childThreadIDs) {
+		
+	   	     my $all = $db->selectall_arrayref("select FrequencyMinutes from Thread where id = $childID");
+		
+		     foreach my $row (@$all) {
+			   my ($freq) = @$row;
+		           insert_timeline_offset($childID, $freq , "inserted as callback child of SMS thread $threadID",$numberID);
+			}
+		}
+
 	}
 }
 sub insert_new_calltrack {
