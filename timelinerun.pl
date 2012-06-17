@@ -110,6 +110,13 @@ sub insert_timeline {
 
 }
 
+sub insert_timeline_offset {
+        my ($threadID, $offset, $comm) = @_;
+
+        my $sth = $db->prepare("INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+$offset minutes'),?,?,?,?,0)");
+        $sth->execute($threadID,  0, undef, $comm,undef);
+
+}
 
 sub print_timeline {
 	my $all = $db->selectall_arrayref("select id, ThreadID, ActivityTime, Completed, CompletedTime, Description, Notes from TimeLine order by ActivityTime");
@@ -158,7 +165,7 @@ sub run_timeline {
 				} elsif ($actionType eq 3) {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
 				} elsif ($actionType eq 4) {
-					outbound_group_sms($destNumber, $mp3Name,$id,$threadID);
+					outbound_group_sms($destNumber, $mp3Name,$id,$threadID,$childThreadID);
 				} elsif ($actionType eq 7) {
                                         outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID);
 				} elsif ($actionType eq 8) {
@@ -359,7 +366,7 @@ sub place_mp3_call {
 
 sub outbound_group_sms {
 
-	 my ($destGroupID, $message, $timeLineID,$threadID) = @_;
+	 my ($destGroupID, $message, $timeLineID,$threadID,$childThreadID) = @_;
 
         #get the numbers in the group
 
@@ -376,6 +383,25 @@ sub outbound_group_sms {
                 outbound_sms($destNumber, $message, $timeLineID, $destNumberID,$threadID);
 
         }
+
+	#now we have to add any child threads
+	@childThreadIDs = split (/,/,$childThreadID);
+
+
+	foreach my $childID (@childThreadIDs) {
+
+		 my $all = $db->selectall_arrayref("select FrequencyMinutes from Thread where id = $childID");
+
+
+		foreach my $row (@$all) {
+			 my ($freq) = @$row;
+
+		
+			insert_timeline_offset($childID, $freq , "inserted as child of SMS thread $threadID");
+
+		}
+
+	}
 	
 
 }
