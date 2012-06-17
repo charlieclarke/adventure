@@ -24,7 +24,7 @@ my $ACTIONTYPE_OUTBOUNDMP3_RESPAWN = 1;
 my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
-$db->do("INSERT INTO Action VALUES (10,'DialTone response', 'Number is irrelevant for this thread ',' ','This action describes how to respond to dial tones/ key presses. ')");
+$db->do("INSERT INTO Action VALUES (10,'DialTone filter', 'Number is irrelevant for this thread ',' ','This action describes how to respond to dial tones/ key presses. ')");
 
 my $all = $db->selectall_arrayref("SELECT * FROM Thread");
 
