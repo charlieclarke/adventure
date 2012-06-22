@@ -140,7 +140,7 @@ sub print_timeline {
 sub run_timeline {
 
 
-	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number from TimeLine, Thread,Number where TimeLine.Completed = 0 and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
 
 	my $hbSql = $db->prepare("update HeartBeat set HeartBeatTime = DateTime('now') where HeartBeatName='LastTimeLine'");
 
@@ -157,7 +157,7 @@ sub run_timeline {
 		if (scalar(@$all) > 0) {
 			print "\n";
 			foreach my $row (@$all) {
-				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID,$additionalNumberID, $additionalNumber) = @$row;
+				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID,$additionalNumberID, $additionalNumber,$twilionumber) = @$row;
 
 				print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name\n";
 
@@ -165,16 +165,16 @@ sub run_timeline {
 					outbound_mp3_group_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency);
 
 				} elsif ($actionType eq 2) {
-					outbound_mp3_group_call($destNumber, $threadID,$id);
+					outbound_mp3_group_call($destNumber, $threadID,$id,$twilionumber);
 				} elsif ($actionType eq 3) {
 					generate_items($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour);
 				} elsif ($actionType eq 4) {
-					outbound_group_sms($destNumber, $mp3Name,$id,$threadID,$childThreadID,$additionalNumberID);
+					outbound_group_sms($destNumber, $mp3Name,$id,$threadID,$childThreadID,$additionalNumberID,$twilionumber);
 				} elsif ($actionType eq 7) {
-                                        outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID);
+                                        outbound_callback_mp3($additionalNumberID, $additionalNumber, $mp3Name,$id,$threadID,$twilionumber);
 				} elsif ($actionType eq 8) {
 					#place sms to the additional number
-					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1);
+					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
                                 }
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -259,7 +259,7 @@ sub generate_items {
 
 sub outbound_mp3_group_call_respawn {
 
-	my ($id, $threadID, $destGroupID, $mp3Name, $frequency) = @_;
+	my ($id, $threadID, $destGroupID, $mp3Name, $frequency,$twilionumber) = @_;
 	print "MAKE CALL: $destGroupID, $mp3Name\n";
 
 
@@ -274,7 +274,7 @@ sub outbound_mp3_group_call_respawn {
 		 my ($destNumber,$numberID) = @$row;
 
                 #make the phone call using twilio API
-                 outbound_mp3_call($destNumber, $threadID,$id,$numberID);
+                 outbound_mp3_call($destNumber, $threadID,$id,$numberID,$twilionumber);
 
         }
 	
@@ -297,7 +297,7 @@ sub outbound_mp3_group_call_respawn {
 
 sub outbound_mp3_group_call {
 
-	my ($destGroupID, $threadID,$timeLineID) = @_;
+	my ($destGroupID, $threadID,$timeLineID,$twilionumber) = @_;
 
 	#get the numbers in the group
 
@@ -310,7 +310,7 @@ sub outbound_mp3_group_call {
                 my ($destNumber,$numberID) = @$row;
 
                 #make the phone call using twilio API
-                outbound_mp3_call($destNumber, $threadID,$timeLineID,$numberID);
+                outbound_mp3_call($destNumber, $threadID,$timeLineID,$numberID,$twilionumber);
 
         }
 
@@ -319,31 +319,31 @@ sub outbound_mp3_group_call {
 
 sub outbound_callback_mp3 {
 
-	my ($additionalNumberID, $additionalNumber, $mp3Name,$timeLineID,$threadID) = @_;
+	my ($additionalNumberID, $additionalNumber, $mp3Name,$timeLineID,$threadID,$twilionumber) = @_;
 
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $additionalNumberID, $response->{content}, 'call not sent');
         print "PLACE CALLBACK: calltrackID = $callTrackID\n";
 
 
-	place_mp3_call($additionalNumber, $threadID, $callTrackID);
+	place_mp3_call($additionalNumber, $threadID, $callTrackID,$twilionumber);
 
 
 }
 sub outbound_mp3_call {
-	my ($destNumber, $threadID,$timeLineID,$numberID) = @_;
+	my ($destNumber, $threadID,$timeLineID,$numberID,$twilionumber) = @_;
 
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'call not sent');
         print "calltrackID = $callTrackID\n";
 
-	place_mp3_call($destNumber, $threadID, $callTrackID);
+	place_mp3_call($destNumber, $threadID, $callTrackID,$twilionumber);
 
 }
 
 sub place_mp3_call {
-	my ($destNumber, $threadID, $callTrackID) = @_;
+	my ($destNumber, $threadID, $callTrackID,$twilionumber) = @_;
 
 
-	print "CALLING $destNumber due to thread $threadID \n";
+	print "CALLING $destNumber from $twilionumber due to thread $threadID \n";
 	$url = $php_server . "timeline-caller.php?threadID=${threadID}&secret=${sharedsecret}&CallTrackID=${callTrackID}";
 	print "URL: $url\n";
 	
@@ -352,7 +352,7 @@ sub place_mp3_call {
 		my $call = 1;
 		if ($call eq 1) {
 			$response = $twilio->POST( 'Calls',
-						 From => $twilio_from_number,
+						 From => $twilionumber,
 					      To   => $destNumber,
 						   Url  => $url );
 
@@ -370,7 +370,7 @@ sub place_mp3_call {
 
 sub outbound_group_sms {
 
-	 my ($destGroupID, $message, $timeLineID,$threadID,$childThreadID,$additionalNumberID) = @_;
+	 my ($destGroupID, $message, $timeLineID,$threadID,$childThreadID,$additionalNumberID,$twilionumber) = @_;
 
         #get the numbers in the group
 
@@ -384,7 +384,7 @@ sub outbound_group_sms {
                 my ($destNumber, $destNumberID) = @$row;
 
                 #make the phone call using twilio API
-                outbound_sms($destNumber, $message, $timeLineID, $destNumberID,$threadID,$childThreadID,0);
+                outbound_sms($destNumber, $message, $timeLineID, $destNumberID,$threadID,$childThreadID,0,$twilionumber);
 
         }
 
@@ -427,9 +427,9 @@ sub is_number_within_region {
 
 
 sub outbound_sms {
-	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild) = @_;
+	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
 
-	print "send SMS $message from $twilio_from_number to $destNumber\n";
+	print "send SMS $message from $twilionumber to $destNumber\n";
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'SMS not sent');
 	print "calltrackID = $callTrackID\n";
 
@@ -438,7 +438,7 @@ sub outbound_sms {
 		if ($sms eq 1) {
 
 			$response = $twilio->POST('SMS/Messages',
-				    From => $twilio_from_number,
+				    From => $twilionumber,
 				    To   => $destNumber,
 				    Body => $message );
 
