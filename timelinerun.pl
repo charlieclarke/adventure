@@ -175,7 +175,10 @@ sub run_timeline {
 				} elsif ($actionType eq 8) {
 					#place sms to the additional number
 					outbound_sms ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
-                                }
+                                } elsif ($actionType eq 11) {
+                                        #kick off children to the additional number
+                                        kickoff ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
+				}
 				
 				mark_timeline_complete($id,"finished OK");	
 
@@ -426,6 +429,23 @@ sub is_number_within_region {
 
 
 
+sub kickoff {
+	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
+
+	print "kickoff children - to the relevent additional number\n";
+	#now we have to add any child threads
+	@childThreadIDs = split (/,/,$childThreadID);
+	foreach my $childID (@childThreadIDs) {
+	
+	     my $all = $db->selectall_arrayref("select FrequencyMinutes from Thread where id = $childID");
+	
+	     foreach my $row (@$all) {
+		   my ($freq) = @$row;
+		   insert_timeline_offset($childID, $freq , "inserted as callback child of kickoff thread $threadID",$numberID);
+		}
+	}
+
+}
 sub outbound_sms {
 	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
 
