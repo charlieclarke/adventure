@@ -94,9 +94,9 @@ sub init {
 
 sub mark_timeline_complete {
 	my ($id, $notes) = @_;
-
 	my $sth = $db->prepare("UPDATE TimeLine set Completed=1, CompletedTime=?, Notes=? where id=?");
 	$sth->execute($time_now_sqllite, $notes, $id);
+	print "marking timeline complete\n";
 
 }
 
@@ -140,7 +140,9 @@ sub print_timeline {
 sub run_timeline {
 
 
-	my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+	    my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+
+
 
 	my $hbSql = $db->prepare("update HeartBeat set HeartBeatTime = DateTime('now') where HeartBeatName='LastTimeLine'");
 
@@ -162,7 +164,7 @@ sub run_timeline {
 				print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name\n";
 
 				if ($actionType eq 1) {
-					outbound_mp3_group_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency);
+					outbound_mp3_group_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency,$twilionumber);
 
 				} elsif ($actionType eq 2) {
 					outbound_mp3_group_call($destNumber, $threadID,$id,$twilionumber);
@@ -178,6 +180,9 @@ sub run_timeline {
                                 } elsif ($actionType eq 11) {
                                         #kick off children to the additional number
                                         kickoff ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
+                                } elsif ($actionType eq 12) {
+                                        #kill off children to the additional number
+                                        killoff ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
 				}
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -263,14 +268,14 @@ sub generate_items {
 sub outbound_mp3_group_call_respawn {
 
 	my ($id, $threadID, $destGroupID, $mp3Name, $frequency,$twilionumber) = @_;
-	print "MAKE CALL: $destGroupID, $mp3Name\n";
+	print "MAKE RESPAWN CALL: $destGroupID, $mp3Name,$twilionumber\n";
 
 
 	#get the numbers in the group
 
 
 	print "making group call to group id $destGroupID\n";
-         my $all = $db->selectall_arrayref("select Number from GroupNumber, Number where GNNumberID = Number.NumberID and GNGroupID = " . $destGroupID);
+         my $all = $db->selectall_arrayref("select Number,NumberID from GroupNumber, Number where GNNumberID = Number.NumberID and GNGroupID = " . $destGroupID);
 
 
         foreach my $row (@$all) {
@@ -429,6 +434,46 @@ sub is_number_within_region {
 
 
 
+sub killoff {
+	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
+
+	print "killoff children - to the relevent additional number\n";
+	#now we have to kill any child threads - we kill child threads send to that number
+	@childThreadIDs = split (/,/,$childThreadID);
+	my $num_killed = 0;
+	foreach my $childID (@childThreadIDs) {
+
+		#get from the timeline any threads of this ID which have been send to destNumber
+	
+		my $sql = "select id from  TimeLine where Completed=0 and AdditionalNumberID = $numberID and ThreadID = $childID";
+		print  "getting threads of childThread $childID with $sql\n"; 
+
+		
+		#foreach id in the timeline
+		my $all = $db->selectall_arrayref($sql);
+        
+	     	foreach my $row (@$all) {
+			my ($timelineID) = @$row;
+			print "killing $timelineID from timeline\n";
+
+
+			mark_timeline_complete($timelineID, "marked complete early due to a killoff");
+
+				
+			#my $dsql = "delete from TimeLine where id = $timelineID";
+			
+			#$db->do($dsql);		
+
+			$num_killed++;
+		}
+
+
+
+	}
+	#update the history with the number of items killed`
+	insert_new_calltrack ($threadID, 0, $numberID, 0, "killoff: killed $num_killed child threads");
+
+}
 sub kickoff {
 	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
 
