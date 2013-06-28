@@ -94,8 +94,8 @@ sub init {
 
 sub mark_timeline_complete {
 	my ($id, $notes) = @_;
-	my $sth = $db->prepare("UPDATE TimeLine set Completed=1, CompletedTime=?, Notes=? where id=?");
-	$sth->execute($time_now_sqllite, $notes, $id);
+	my $sth = $db->prepare("UPDATE TimeLine set Completed=1, CompletedTime=?, Description = Description || ' ' || ?, Notes=? where id=? and Completed<>1");
+	$sth->execute($time_now_sqllite, $notes, $notes, $id);
 	print "marking timeline complete\n";
 
 }
@@ -453,16 +453,13 @@ sub killoff {
 		my $all = $db->selectall_arrayref($sql);
         
 	     	foreach my $row (@$all) {
-			my ($timelineID) = @$row;
-			print "killing $timelineID from timeline\n";
+			my ($childtimelineID) = @$row;
+			print "killing $childtimelineID from timeline\n";
 
 
-			mark_timeline_complete($timelineID, "marked complete early due to a killoff");
+			mark_timeline_complete($childtimelineID, "killed by $timeLineID");
 
 				
-			#my $dsql = "delete from TimeLine where id = $timelineID";
-			
-			#$db->do($dsql);		
 
 			$num_killed++;
 		}
