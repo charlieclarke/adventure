@@ -183,7 +183,10 @@ sub run_timeline {
                                 } elsif ($actionType eq 12) {
                                         #kill off children to the additional number
                                         killoff ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
-				}
+				} elsif ($actionType eq 14) {
+                                        #place SIM to the additional number
+                                        outbound_sim ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
+			        } 
 				
 				mark_timeline_complete($id,"finished OK");	
 
@@ -529,6 +532,43 @@ sub outbound_sms {
 
 	}
 }
+
+
+sub outbound_sim {
+	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
+
+	print "send SIM $message from $twilionumber to $destNumber\n";
+	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'SIM not sent');
+	print "calltrackID = $callTrackID\n";
+
+
+	#now send the message by inserting it into the SIM table in the database...
+
+	print "sending SIM message for $destNumber / $numberID message is $message\n";
+        my $sth = $db->prepare("INSERT INTO SIMMessage (DstNumberID ,SIMTime , SIMText , SIMIsRcvd , SIMIsOutbound  ) VALUES (?,DATETIME('now'), ?,0,1)");
+        $sth->execute($numberID,$message);
+
+	update_calltrack_twilio($callTrackID, "not relevent for SIM", 'SIM sent');
+
+
+	if ($spawnChild > 0) {
+
+		#now we have to add any child threads
+		@childThreadIDs = split (/,/,$childThreadID);
+		foreach my $childID (@childThreadIDs) {
+		
+	   	     my $all = $db->selectall_arrayref("select FrequencyMinutes from Thread where id = $childID");
+		
+		     foreach my $row (@$all) {
+			   my ($freq) = @$row;
+		           insert_timeline_offset($childID, $freq , "inserted as callback child of SMS thread $threadID",$numberID);
+			}
+		}
+
+	}
+}
+
+
 sub insert_new_calltrack {
 
 	my ($threadID, $timeLineID, $numberID, $twilioID, $textStatus) = @_;
