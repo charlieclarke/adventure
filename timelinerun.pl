@@ -50,6 +50,10 @@ $internationalPhoneRegion = '+44';
 my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
+$db->do("PRAGMA cache_size = 800000");
+$db->do("PRAGMA synchronous = OFF");
+
+
 $time_now = DateTime->now;
 $time_now_sqllite  = DateTime::Format::SQLite->format_datetime($time_now);
 
@@ -130,7 +134,7 @@ sub print_timeline {
 		my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes) = @$row;
 
 		$printableTime = scalar($activityTime);
-		print "$id\t$threadID,$printableTime\t$completed\t$completedTime\t$description\t$notes\n";
+#		print "$id\t$threadID,$printableTime\t$completed\t$completedTime\t$description\t$notes\n";
 	}
 
 
@@ -140,7 +144,7 @@ sub print_timeline {
 sub run_timeline {
 
 
-	    my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+	    my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber, TNumber.TNumberID from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
 
 
 
@@ -159,9 +163,9 @@ sub run_timeline {
 		if (scalar(@$all) > 0) {
 			print "\n";
 			foreach my $row (@$all) {
-				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID,$additionalNumberID, $additionalNumber,$twilionumber) = @$row;
+				my ($id, $threadID, $activityTime, $completed, $completedTime, $description, $notes, $actionType, $mp3Name, $destNumber, $frequency,$startTimeHour,$stopTimeHour,$childThreadID,$additionalNumberID, $additionalNumber,$twilionumber,$twilionumberID) = @$row;
 
-				print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name\n";
+			#	print "got task $id with threadID $threadID: $description - actionType $actionType, mp3 $mp3Name addNumberID $additionalNumberID\n";
 
 				if ($actionType eq 1) {
 					outbound_mp3_group_call_respawn($id, $threadID, $destNumber, $mp3Name, $frequency,$twilionumber);
@@ -186,7 +190,16 @@ sub run_timeline {
 				} elsif ($actionType eq 14) {
                                         #place SIM to the additional number
                                         outbound_sim ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
-			        } 
+				} elsif ($actionType eq 15) {
+					print "prestash call: addnumberID = $additionalNumberID mp3 = $mp3Name\n";
+                                        #STASH - 
+                                        save_stash ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
+	
+			        } elsif ($actionType eq 16) {
+                        #                print "active children\n";
+                                        activate_children ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumberID);
+                                        #
+				}
 				
 				mark_timeline_complete($id,"finished OK");	
 
@@ -533,7 +546,79 @@ sub outbound_sms {
 	}
 }
 
+#save_stash ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumber);
 
+
+sub save_stash {
+	my ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, $b,$twilionumber) = @_;
+
+	#we have to save in the stash for additionalNumber, the key id mp3name and the value is the previous inbound SMS or SIM
+	#
+	#which for now we have to assume is the most recent INBOUND mesage from this numberID? does that work?
+	#
+	#:
+	print "stashing key: $mp3Name for numberID $additionalNumberID\n";
+
+	$sql = "insert into Stash (NumberID,StashTime, StashKey, StashValue) select TrackNumberID,DATETIME('now'), ?,RawText from CallTrack where TrackNumberID = ? and IsOutbound = 0 and not exists (select * from Stash where NumberID = ? and StashKey = ? )order by TrackID desc limit 1";
+
+	my $sth = $db->prepare($sql);
+        $sth->execute($mp3Name, $additionalNumberID, $additionalNumberID, $mp3Name);
+	print "stashing key: $mp3Name for numberID $additionalNumberID\n";
+	
+
+}
+
+sub activate_children {
+	my ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, $b,$twilionumber) = @_;
+
+	#we have to save in the stash for additionalNumber, the key id mp3name and the value is the previous inbound SMS or SIM
+	#
+	#which for now we have to assume is the most recent INBOUND mesage from this numberID? does that work?
+	#
+	#:
+	print "activating threads \n";
+
+	@childThreadIDs = split (/,/,$childThreadID);
+
+	$threadlist = "(";
+	$sep = "";
+	foreach my $childID (@childThreadIDs) {
+		$threadlist = $threadlist . $sep . $childID;
+		$sep = ",";
+	}
+	$threadlist = $threadlist . ")";
+	print "activate threads $threadlist\n";
+	activate_thread($threadlist,$twilionumber);
+
+
+	
+	#note - we do NOT spawn children here!!!
+
+}
+
+sub activate_thread {
+	my ($threads, $twilionumber) = @_;
+	
+	$sql = "UPDATE Thread SET Active=1 where ID in $threads and TNumberID = ?";
+	my $sth = $db->prepare($sql);
+	$sth->execute($twilionumber);
+
+	$sql = "UPDATE Thread SET Active=0 where ID not in $threads and TNumberID = ?";
+	my $sth = $db->prepare($sql);
+	
+	$sth->execute($twilionumber);
+
+}
+sub deactivate_threads_by_twilio_number {
+	my ($twilionumber) = @_;
+	
+	$sql = "UPDATE Thread SET Active=0 where TNumberID = ?";
+	my $sth = $db->prepare($sql);
+	
+	$sth->execute($twilionumber);
+
+
+}
 sub outbound_sim {
 	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber) = @_;
 
