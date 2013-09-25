@@ -50,9 +50,10 @@ $internationalPhoneRegion = '+44';
 my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 {RaiseError => 1, AutoCommit => 1});
 
-$db->do("PRAGMA cache_size = 800000");
+$db->do("PRAGMA cache_size = 100000");
 $db->do("PRAGMA synchronous = OFF");
 
+print "db timeout " . $db->sqlite_busy_timeout() . "\n\n";
 
 $time_now = DateTime->now;
 $time_now_sqllite  = DateTime::Format::SQLite->format_datetime($time_now);
@@ -212,6 +213,14 @@ sub run_timeline {
 
 		sleep(1);
 		sync_time();
+		#delete old timeline entries...
+		$sql = "delete from TimeLine where Completed=1";
+
+
+		my $sth = $db->prepare($sql);
+		$sth->execute();
+
+
 	}
 }
 sub generate_items {
