@@ -200,6 +200,14 @@ sub run_timeline {
                         #                print "active children\n";
                                         activate_children ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumberID);
                                         #
+			        } elsif ($actionType eq 17) {
+                        #                print "sent tweet\n";
+                                        outbound_tweet ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, 1,$twilionumberID);
+                                        #
+			        } elsif ($actionType eq 18) {
+                                        number_to_group_action ($destNumber,$additionalNumberID);
+			        } elsif ($actionType eq 19) {
+                                        number_from_group_action ($destNumber,$additionalNumberID);
 				}
 				
 				mark_timeline_complete($id,"finished OK");	
@@ -223,6 +231,41 @@ sub run_timeline {
 
 	}
 }
+sub number_to_group_action {
+	my ($destNumber,$additionalNumberID) = @_;
+
+
+	print "adding $additionalNumberID to group $destNumber\n";
+
+
+
+	$sql = "INSERT INTO GroupNumber (GNNumberID, GNGroupID) select ?,? where not exists (select GNNumberID from GroupNumber where GNNumberID = ? and GNGroupID=?)";
+
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID,$destNumber,$additionalNumberID,$destNumber);
+
+
+
+
+
+}
+sub number_from_group_action {
+        my ($destNumber,$additionalNumberID) = @_;
+
+
+        print "adding $additionalNumberID to group $destNumber\n";
+
+
+
+        $sql = "delete from  GroupNumber where GNNumberID = ? and GNGroupID = ?";
+
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID,$destNumber);
+
+
+
+}
+
 sub generate_items {
 
 	my ($id, $threadID, $childThreadID, $frequency, $startTimeHour, $stopTimeHour) = @_;
@@ -608,6 +651,17 @@ sub save_stash {
 	
 
 }
+sub outbound_tweet {
+        my ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, $b,$twilionumber) = @_;
+
+	print "sending tweet\n";
+
+	print "twitter text is $mp3Name\n";
+
+
+
+}
+
 
 sub activate_children {
 	my ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, $b,$twilionumber) = @_;
