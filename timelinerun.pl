@@ -26,9 +26,8 @@ use Config::Simple;
 my $cfg = new Config::Simple($configlocation);
 my $db_location = $cfg->param('database.databasepath');
 
-my $twilio_account_sid = $cfg->param('twilio.twilioAcountSid');
-my $twilio_auth_token = $cfg->param('twilio.twilioAuthToken');
-my $twilio_from_number = $cfg->param('twilio.twilioFromNumber');
+#need to get the twilio account details from the database!!!!
+#
 my $php_server = $cfg->param('web.phpServer');
 print "php server is $php_server\n";
 
@@ -38,8 +37,6 @@ my $sharedsecret=$cfg->param('web.sharedSecret');
 
 #initialize connection to twilio - remember to put in the correct credentials
 
-my $twilio = WWW::Twilio::API->new(AccountSid => $twilio_account_sid,
-                                     AuthToken  => $twilio_auth_token);
 
 
 $internationalPhoneRegion = '+44';
@@ -54,6 +51,16 @@ $db->do("PRAGMA cache_size = 100000");
 $db->do("PRAGMA synchronous = OFF");
 
 print "db timeout " . $db->sqlite_busy_timeout() . "\n\n";
+
+
+my $twilio_account_sid = $cfg->param('twilio.twilioAcountSid');
+my $twilio_auth_token = $cfg->param('twilio.twilioAuthToken');
+my $twilio_from_number = $cfg->param('twilio.twilioFromNumber');
+
+
+my $twilio = WWW::Twilio::API->new(AccountSid => $twilio_account_sid,
+                                     AuthToken  => $twilio_auth_token);
+
 
 $time_now = DateTime->now;
 $time_now_sqllite  = DateTime::Format::SQLite->format_datetime($time_now);
@@ -422,12 +429,36 @@ sub place_mp3_call {
 	print "CALLING $destNumber from $twilionumber due to thread $threadID \n";
 	$url = $php_server . "timeline-caller.php?threadID=${threadID}&secret=${sharedsecret}&CallTrackID=${callTrackID}";
 	print "URL: $url\n";
+
+
+	#need to geet the twilio account data for this specific twilio number.
+	#
+	$tsql = "select twilioAcountSID, twilioAuthToken from CloneTwilio inner join TNumber on CloneTwilio.CloneTwilioID = TNumber.CloneID where TNumber.TNumber = '$twilionumber'";
+
 	
+	my $all = $db->selectall_arrayref($tsql);
+
+	$twilioSID="";
+	$twilioToken = "";
+	
+        foreach my $row (@$all) {
+                my ($id, $tok) = @$row;
+
+		$twilioSID = $id;
+		$twilioToken = $tok;
+	}
+
+
 
 	if (is_number_within_region($destNumber,$twilionumber,$prefixWL)) { 
 		my $call = 1;
 		if ($call eq 1) {
-			$response = $twilio->POST( 'Calls',
+			my $loctwilio = WWW::Twilio::API->new(AccountSid => $twilioSID,
+                                     AuthToken  => $twilioToken);
+
+
+
+			$response = $loctwilio->POST( 'Calls',
 						 From => $twilionumber,
 					      To   => $destNumber,
 						   Url  => $url );
@@ -595,11 +626,34 @@ sub outbound_sms {
 	my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $numberID, $response->{content}, 'SMS not sent');
 	print "calltrackID = $callTrackID\n";
 
+
+
+	#need to geet the twilio account data for this specific twilio number.
+	#
+	$tsql = "select twilioAcountSID, twilioAuthToken from CloneTwilio inner join TNumber on CloneTwilio.CloneTwilioID = TNumber.CloneID where TNumber.TNumber = '$twilionumber'";
+
+	
+	my $all = $db->selectall_arrayref($tsql);
+
+	$twilioSID="";
+	$twilioToken = "";
+	
+        foreach my $row (@$all) {
+                my ($id, $tok) = @$row;
+
+		$twilioSID = $id;
+		$twilioToken = $tok;
+	}
+
+
 	if (is_number_within_region($destNumber,$twilionumber,$prefixWL)) {
 		my $sms = 1;
 		if ($sms eq 1) {
 
-			$response = $twilio->POST('SMS/Messages',
+			my $loctwilio = WWW::Twilio::API->new(AccountSid => $twilioSID,
+                                     AuthToken  => $twilioToken);
+
+			$response = $loctwilio->POST('SMS/Messages',
 				    From => $twilionumber,
 				    To   => $destNumber,
 				    Body => $message );
