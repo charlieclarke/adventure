@@ -656,7 +656,32 @@ sub outbound_tweet {
 
 	print "sending tweet\n";
 
-	print "twitter text is $mp3Name\n";
+
+	$message = $mp3Name;
+
+	$inboundUser = "not-known";
+
+	#get the name out of the additional number
+	#
+	my $all = $db->selectall_arrayref("select NumberDescription from Number where NumberID =  " . $additionalNumberID);
+
+
+        foreach my $row (@$all) {
+                my ($numberDescription) = @$row;
+		$inboundUser = $numberDescription;
+	}
+
+	#now need to get twitter info for the number
+
+
+	$message =~ s/\[InboundName\]/$inboundUser/g;
+
+
+	print "twitter text is $message\n";
+
+	
+
+	system ("/home/ec2-user/adventure/tweet.pl", $message);
 
 
 
