@@ -725,7 +725,23 @@ sub outbound_tweet {
 		$inboundUser = $numberDescription;
 	}
 
+
+	
+	my ($twitterName, $twitterAccessToken, $twitterAccessTokenSecret, $twitterConsumerKey,$twitterConsumerKeySecret);
+
 	#now need to get twitter info for the number
+	#
+	#
+	my $all = $db->selectall_arrayref("select TNumberName, TwitterAccessToken, TwitterAccessTokenSecret, TwitterConsumerKey, TwitterConsumerKeySecret from TNumber where TNumberID =  " . $twilionumber);
+
+	print "get params from db: select TNumberName, TwitterAccessToken, TwitterAccessTokenSecret, TwitterConsumerKey, TwitterConsumerKeySecret from TNumber where TNumberID =  " . $twilionumber;
+	print "\n";
+
+
+        foreach my $row (@$all) {
+                #my ($twitterName, $twitterAccessToken, $twitterAccessTokenSecret, $twitterConsumerKey,$twitterConsumerKeySecret) = @$row;
+                ($twitterName, $twitterAccessToken, $twitterAccessTokenSecret, $twitterConsumerKey,$twitterConsumerKeySecret) = @$row;
+        }
 
 
 	$message =~ s/\[InboundName\]/$inboundUser/g;
@@ -734,8 +750,26 @@ sub outbound_tweet {
 	print "twitter text is $message\n";
 
 	
+print "twitter params\n";
 
-	system ("/home/ec2-user/adventure/tweet.pl", $message);
+print $twitterName;
+print "\n";
+print $twitterAccessToken;
+
+print "\n";
+print $twitterAccessTokenSecret;
+
+print "\n";
+
+print $twitterConsumerKey;
+
+print "\n";
+print $twitterConsumerKeySecret;
+
+print "\n";
+print "how send tweet\n";
+
+	system ("/home/ec2-user/adventure/tweet.pl", $message,$twitterName, $twitterAccessToken, $twitterAccessTokenSecret, $twitterConsumerKey,$twitterConsumerKeySecret);
 
 
 
