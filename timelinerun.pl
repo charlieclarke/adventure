@@ -231,6 +231,10 @@ sub run_timeline {
 					#if the filter works, then we kickoff the children.
                                         filter_stash_less_action ($additionalNumberID,$mp3Name,$threadID, $childThreadID);
 				
+			        } elsif ($actionType eq 24) { #filter if stash <. this is the odd one where we need <STASHNAME>,<value>
+					#if the filter works, then we kickoff the children.
+                                        decrement_stash_action ($additionalNumberID,$mp3Name);
+					insert_child_threads($additionalNumberID,$threadID, $childThreadID);
 				}
 				mark_timeline_complete($id,"finished OK");	
 
@@ -768,6 +772,19 @@ sub reset_stash_to_zero_action {
 }
 #increment_stash_action ($additionalNumberID,$mp3Name);
 #
+
+sub decrement_stash_action {
+
+        my ($additionalNumberID, $mp3Name) = @_;
+
+        $sql = "update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ?";
+
+        print "$sql stashkey $mp3Name for numberID $additionalNumberID\n";
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID,$mp3Name);
+        print "decrement: $mp3Name for numberID $additionalNumberID\n";
+}
+
 
 sub increment_stash_action {
 
