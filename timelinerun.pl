@@ -213,10 +213,25 @@ sub run_timeline {
                                         #
 			        } elsif ($actionType eq 18) {
                                         number_to_group_action ($destNumber,$additionalNumberID);
+					insert_child_threads($additionalNumberID,$threadID, $childThreadID);
 			        } elsif ($actionType eq 19) {
                                         number_from_group_action ($destNumber,$additionalNumberID);
-				}
+					insert_child_threads($additionalNumberID,$threadID, $childThreadID);
+			        } elsif ($actionType eq 20) { #reset stash to 0
+                                        reset_stash_to_zero_action ($additionalNumberID,$mp3Name);
+					insert_child_threads($additionalNumberID,$threadID, $childThreadID);
+			        } elsif ($actionType eq 21) { #increment stash [if its a number]
+                                        increment_stash_action ($additionalNumberID,$mp3Name);
+					insert_child_threads($additionalNumberID,$threadID, $childThreadID);
+			        } elsif ($actionType eq 22) { #filter if stash >. this is the odd one where we need <STASHNAME>,<value>
+					#if the filter works, then we kickoff the children.
+                                        filter_stash_greater_action ($additionalNumberID,$mp3Name,$threadID,$childThreadID);
 				
+			        } elsif ($actionType eq 23) { #filter if stash <. this is the odd one where we need <STASHNAME>,<value>
+					#if the filter works, then we kickoff the children.
+                                        filter_stash_less_action ($additionalNumberID,$mp3Name,$threadID, $childThreadID);
+				
+				}
 				mark_timeline_complete($id,"finished OK");	
 
 				
@@ -619,6 +634,29 @@ sub kickoff {
 	}
 
 }
+
+sub insert_child_threads {
+
+
+	my ($numberID, $threadID, $childThreadID) = @_;
+
+
+	print "kickoff children - to the relevent additional number\n";
+	#now we have to add any child threads
+	@childThreadIDs = split (/,/,$childThreadID);
+	foreach my $childID (@childThreadIDs) {
+		print "..adding child $childID\n";
+	
+	     my $all = $db->selectall_arrayref("select FrequencyMinutes from Thread where id = $childID");
+	
+	     foreach my $row (@$all) {
+		   my ($freq) = @$row;
+		   insert_timeline_offset($childID, $freq , "inserted as callback child of kickoff thread $threadID",$numberID);
+		}
+	}
+
+}
+
 sub outbound_sms {
 	my ($destNumber, $message,$timeLineID,$numberID,$threadID,$childThreadID, $spawnChild,$twilionumber,$prefixWL) = @_;
 
@@ -705,6 +743,136 @@ sub save_stash {
 	
 
 }
+
+#reset_stash_to_zero_action ($additionalNumberID,$mp3Name);
+
+sub reset_stash_to_zero_action {
+
+	my ($additionalNumberID, $mp3Name) = @_;
+
+	$sql = "delete from Stash where NumberID = ? and StashKey = ?";
+
+        print "$sql stashkey $mp3Name for numberID $additionalNumberID\n";
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID, $mp3Name);
+        print "stashing key: $mp3Name for numberID $additionalNumberID\n";
+	
+	$sql = "insert into Stash (NumberID,StashTime, StashKey, StashValue) values(?,DATETIME('now'), ?,'0' )";
+
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID,$mp3Name);
+
+        print "resetting to zero: $mp3Name for numberID $additionalNumberID\n";
+
+
+}
+#increment_stash_action ($additionalNumberID,$mp3Name);
+#
+
+sub increment_stash_action {
+
+        my ($additionalNumberID, $mp3Name) = @_;
+
+        $sql = "update Stash set stashvalue=stashvalue+1 where NumberID = ? and StashKey = ?";
+
+        print "$sql stashkey $mp3Name for numberID $additionalNumberID\n";
+        my $sth = $db->prepare($sql);
+        $sth->execute($additionalNumberID,$mp3Name);
+        print "increment: $mp3Name for numberID $additionalNumberID\n";
+
+
+}
+
+
+
+sub filter_stash_greater_action {
+	my ($additionalNumberID,$mp3name,$threadID, $childThreadID) = @_;
+
+
+	print "filter on $mp3name\n";
+	if ($mp3name =~ /(\w+),(\d+)/) {
+		$key = $1;
+		$value = $2;	
+
+
+
+		my $sql = "select StashValue from Stash where NumberID = ? and StashKey = ? ";
+	#	my $sql = "select StashValue from Stash ";
+
+		print "filtering on -$key- for $additionalNumberID\n";
+		my $sth = $db->prepare($sql);
+		$sth->execute($additionalNumberID, $key);
+	#	$sth->execute();
+
+
+		my $stashvalue=0;
+		while (my @row = $sth->fetchrow_array) {
+			print "aaaa @row\n";
+			my ($value) = @row;
+			$stashvalue = $value;
+		}
+
+		print "FILTER: got $stashvalue for $additionalNumberID, $mp3name\n"; 
+
+
+		if ($stashvalue > $key) {
+			print "filter";
+			insert_child_threads($additionalNumberID,$threadID, $childThreadID);
+
+		} else {
+			print "no filter";
+		}
+	} else {
+		print "FILTER - bad key";
+	}
+
+
+}
+sub filter_stash_less_action { 
+	my ($additionalNumberID,$mp3name,$threadID, $childThreadID) = @_;
+
+
+	print "filter on $mp3name\n";
+	if ($mp3name =~ /(\w+),(\d+)/) {
+		$key = $1;
+		$value = $2;	
+
+
+
+		my $sql = "select StashValue from Stash where NumberID = ? and StashKey = ? ";
+	#	my $sql = "select StashValue from Stash ";
+
+		print "filtering on -$key- for $additionalNumberID\n";
+		my $sth = $db->prepare($sql);
+		$sth->execute($additionalNumberID, $key);
+	#	$sth->execute();
+
+
+		my $stashvalue=0;
+		while (my @row = $sth->fetchrow_array) {
+			print "aaaa @row\n";
+			my ($value) = @row;
+			$stashvalue = $value;
+		}
+
+		print "FILTER: got $stashvalue for $additionalNumberID, $mp3name\n"; 
+
+
+		if ($stashvalue < $key) {
+			print "filter";
+			insert_child_threads($additionalNumberID,$threadID, $childThreadID);
+
+		} else {
+			print "no filter";
+		}
+	} else {
+		print "FILTER - bad key";
+	}
+
+
+}
+
+
 sub outbound_tweet {
         my ($additionalNumber, $mp3Name,$id,$additionalNumberID,$threadID, $childThreadID, $b,$twilionumber) = @_;
 
@@ -748,6 +916,8 @@ sub outbound_tweet {
 
 
 	print "twitter text is $message\n";
+	#SOMETHING LIKE THIS TO PUT TWEET INTO CALLTRACK??
+	#my $callTrackID = insert_new_calltrack($threadID, $timeLineID, $additionalNumberID, "tweeted $message", "tweeted $message");
 
 	
 print "twitter params\n";
