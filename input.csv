@@ -1,0 +1,200 @@
+Q1,"Here's how this game plays. You answer each question by making your choice A to D. If you like, you can add a comment. Is this clear?"
+A,Yes
+B,No
+C,I think so
+D,t's clear but I reckon there's something else to watch out for
+RA,You answered in time!
+RB,You answered in time!
+RC,You answered in time!
+RD,You answered in time!
+
+Q2,Do you believe the host saying that it doesn't matter if you pass?
+A,Yes
+B,No
+C,Its hard to read our host
+D,Pass
+RA,It really doesn't matter for winning the game but the more you can answer the better we can place you.
+RB,"Yes. It really doesn't matter for winning the game, but the more you can answer the better we can place you."
+RC,I agree. But he has a lovely beard and here he speaks the truth. You can pass.
+RD, Aren't you the tricksy one? Do I think you're right? Pass.
+
+Q3,Did you notice what flashed on the big screens a second ago?
+A,"No, I'm always paying attention to the action."
+B,An elephant.
+C,A giraffe.
+D,A rabbit.
+RA,That's wise. But try and keep an eye out for the screens too if you can.
+RB,Close. But it's good you're keeping an eye on the screens and the action.
+RC,Close. But it's good you're keeping an eye on the screens and the action.
+RD,Bingo. Keep an eye on the screens and an eye on the action
+
+Q4,How do you feel about the rules of this game being mysterious?
+A,Mostly excited.
+B,Mostly annoyed.
+C,A little intrigued.
+D,It's what I'd expect.
+RA,"That's good to know, thanks."
+RB,"That's good to know, thanks."
+RC,"That's good to know, thanks."
+RD,"That's good to know, thanks."
+
+Q5,How much do you care about winning a game?
+A,"I love to win, by any means necessary."
+B,"I love to win, but we must follow the rules."
+C,I like to win but how well we play is also important.
+D,I don't care as long as everyone has fun.
+RA,That's most revealing.
+RB,That's most revealing.
+RC,That's most revealing.
+RD,That's most revealing.
+
+Q6,Which do you suspect will be most important for winning this game?
+A,"Answering a particular number of questions, whether right or wrong."
+B,Only giving the right answers to questions which have a right answer.
+C,Adding interesting comments to the answers.
+D,It won't be about these questions but everything else we play.
+RA,You're right
+RB,You're right. 
+RC,You're right. 
+RD,You're right. 
+
+Q7,"Do you think that I said ""you're right"" to everyone? Take a look around before answering."
+A,Definitely yes.
+B,Definitely not.
+C,"I'm not sure, but I'm smiling."
+D,"I'm not sure, but other people seem to be smiling."
+RA,"You might be right, but I'm not saying."
+RB,"You might be right, but I'm not saying."
+RC,"You might be right, but I'm not saying."
+RD,"You might be right, but I'm not saying."
+
+Q8,Which is most like you in play?
+A,Someone who dives right into playing.
+B,Someone who looks for other people and then dives in with them.
+C,Someone who prefers to watch other people playing before then diving in.
+D,Someone who prefers to watch rather than playing unless absolutely comfortable.
+RA,"That's good to know, and you can do as you like."
+RB,"That's good to know, and you can do as you like."
+RC,"That's good to know, and you can do as you like."
+RD,"That's good to know, and you can do as you like."
+
+Q9,How would you feel if lit by an invisible spotlight while inside a crowd?
+A,Exposed
+B,Excited
+C,Empowered
+D,Encumbered
+RA,"Not to worry, there's no light on you now."
+RB,Ha. There's a light shining on you right now.
+RC,Ha. There's a light shining on you right now.
+RD,"Not to worry, there's no light on you now."
+
+Q10,"Who am I, Frankie Kuniklo?"
+A,The actor Brian Ferguson
+B,Someone else in the performance team
+C,Someone in the audience
+D,PASS
+RA,"Are you sure? He's a good actor, but not that good."
+RB,Are you sure? I prefer to hide in the crowd.
+RC,I'd be one of the best players in the room if so.
+RD,That might be wise to pass.
+
+Q11,Which of these can you see in play?
+A,A flashmob gathering and no one can spot who started it.
+B,"The joy of simultaneous movement, moving together in a place where dancing has been banned."
+C,Where following people online becomes as risky as following people in public.
+D,All of the above but the one I'd most care about is the one I'm putting in the comments.
+RA,Thank you. That's quite revealing.
+RB,Thank you. That's very revealing.
+RC,Thank you. That's very revealing.
+RD,It's good you can see more than one thing in play.
+
+Q12,Who do you think is going to win this game? And any comment why?
+A,Team Purple
+B,Team Orange
+C,Team Green
+D,"I want my team to win so if this counts somehow, count me double!"
+RA,Thank you. Let's see what happens.
+RB,Thank you. Let's see what happens.
+RC,Thank you. Let's see what happens.
+RD,Everything counts (in small amounts).
+
+Q13,Which of these future scenarios is reflected most in this system?
+A,"A demonstration outside the Ecuadorean embassy, cameras trained to identify ringleaders."
+B,"A rush is planned on the future stocks of Amazon, the plan distributed and hidden in plain sight online."
+C,"An emotionally intelligent retail environment in Hong Kong, reading the hidden intentions of shoppers to spot trends."
+D,All of the above but the one I'd most care about is the one I'm putting in the comments.
+RA,Thank you. That's useful to know.
+RB,Thank you. That's useful to know.
+RC,Thank you. That's useful to know.
+RD,Thank you. That's useful to know.
+
+Q14,Which of these is most in play for you here?
+A,The assumption that people will be self-serving is a means of controlling them. 
+B,Unaccountable private interactions are likely to be presumed dangerous.
+C,The whole system is a bluff for something Frankie Kuniklo is planning.
+D,There are clues embedded in the words appearing on screen.
+RA,"It has always been so, no?"
+RB,"It has always been so, no?"
+RC,Good spot.
+RD,Good spot. 
+
+Q15,Why are you helping monitor other teams?
+A,I want us to win.
+B,It's the rules of the game.
+C,Everyone else is doing it
+D,I believe the other teams are up to no good.
+RA,Thank you. That's useful to know.
+RB,"True, but you know what to do with rules."
+RC,"True, but someone has to break first."
+RD,Thank you. That's useful to know.
+
+Q16,Which of these future scenarios is reflected most in this system?
+A,Plans for even innocuous activity must pass through countless proxies to remain untraceable.
+B,A slow infiltration of a trading floor to gather intelligence.
+C,"The public self-monitor each other to the state for points, a gamified police force. "
+D,"None of these, it's just a game."
+RA,Thank you. That's useful to know.
+RB,Thank you. That's useful to know.
+RC,Thank you. That's useful to know.
+RD,Thank you. That's useful to know.
+
+Q17,How do you best change a system?
+A,Step outside the system to see the bigger picture
+B,The smallest actions necessary targeted to the pivotal parts of the system
+C,Change the minds of the people inside the system
+D,"All of the above, as gently as you can."
+RA,Yes. Can you do that here?
+RB,Yes. Can you do that here?
+RC,Yes. Can you do that here?
+RD,Yes. Yes. Yes. And there's always room for magic.
+
+Q18,Which of these is true?
+A,The only people with access to the director's office are the director and the cleaner.
+B,"Everywhere, like Jericho, the walls come tumbling down (eventually)."
+C,The person in the know has the tattoo of a rabbit on her shoulder.
+D,The guard is in on the hidden game. She'd smile if it didn't give the game away.
+RA,Did you want an option to pick all of the above?
+RB,Did you want an option to pick all of the above?
+RC,Did you want an option to pick all of the above?
+RD,Did you want an option to pick all of the above?
+
+Q19,"If Frankie Kuniklo is instructing him, how responsible is the actor Brian Ferguson for his actions? And add in a comment how would you do in his shoes?"
+A,Brian is entirely responsible.
+B,"The responsibility lies between them, mostly towards Brian."
+C,"The responsibility lies between them, mostly towards Frankie."
+D,Frankie is entirely responsible.
+RA,Interesting and revealing. What agency can Brian have if he doesn't know what's coming next?
+RB,Interesting. But what agency can Brian have if he doesn't know what's coming next?
+RC,Interesting. But what agency does Frankie really have if Brian is the actor in the room?
+RD,Interesting and revealing. What agency does Frankie really have if Brian is the actor in the room?
+
+Q20,"Would you like to know later the identity of Frankie Kuniklo? If so, please include your email address in the comment box"
+A,Yes please.
+B,"I think I know already but yes, tell me."
+C,"No, don't spoil it."
+D,Not bothered.
+RA,Thanks for playing. I will be in touch.
+RB,Ha. Thanks for playing. I will be in touch.
+RC,Of course. Thanks for playing.
+RD,No worries. Thanks for playing.
+
