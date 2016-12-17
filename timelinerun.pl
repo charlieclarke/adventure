@@ -127,6 +127,9 @@ sub insert_timeline_offset {
 	my $sql = "INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+$offset minutes'),?,?,?,?,?)";	
 
 
+	print "inserting new thread into timeline - threadID $threadID \n";
+
+
 	print "sq; is $sql\n";
 
         my $sth = $db->prepare($sql);
@@ -152,7 +155,8 @@ sub print_timeline {
 sub run_timeline {
 
 
-	    my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber, TNumber.TNumberID,TNumber.PrefixWL from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+	    #my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber, TNumber.TNumberID,TNumber.PrefixWL from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime");
+	    my $sth = $db->prepare("select TimeLine.id, TimeLine.ThreadID, TimeLine.ActivityTime, TimeLine.Completed, TimeLine.CompletedTime, TimeLine.Description, TimeLine.Notes, Thread.ActionType, Thread.mp3Name, Thread.DestNumber, Thread.FrequencyMinutes,Thread.StartTimeHour, Thread.StopTimeHour,Thread.ChildThreadID, Number.NumberID, Number.Number, TNumber.TNumber, TNumber.TNumberID,TNumber.PrefixWL from TimeLine, Thread,Number, TNumber where TimeLine.Completed = 0 and Thread.TNumberID = TNumber.TNumberID and TimeLine.ActivityTime < ? and TimeLine.ThreadID = Thread.id and TimeLine.AdditionalNumberID = Number.NumberID order by TimeLine.ActivityTime LIMIT 1");
 
 
 
@@ -246,9 +250,9 @@ sub run_timeline {
 			}
 		} else {
 			print 'x';
+			sleep(1);
 		}
 
-		sleep(1);
 		sync_time();
 		#delete old timeline entries...
 		$sql = "delete from TimeLine where Completed=1";
@@ -365,7 +369,7 @@ sub generate_items {
 sub outbound_mp3_group_call_respawn {
 
 	my ($id, $threadID, $destGroupID, $mp3Name, $frequency,$twilionumber) = @_;
-	print "MAKE RESPAWN CALL: $destGroupID, $mp3Name,$twilionumber\n";
+	print "MAKE RESPAWN CALL: threadID = $threadID - $destGroupID, $mp3Name,$twilionumber\n";
 
 
 	#get the numbers in the group
