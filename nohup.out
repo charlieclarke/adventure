@@ -1,2 +1,372 @@
 starting timeine again
 Sun 11 Dec 21:59:09 UTC 2016
+got hostname of ip-10-58-225-44
+
+php server is http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/adventureweb/adventureweb/
+db location from config = /var/cache/timeline/timeline.db
+db timeout 30000
+
+--------
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+delete from Stash where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+stashing key: XMASNAG for numberID 1
+resetting to zero: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, , SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42756
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMbd63e2347288445ba56b423154dcbe91</Sid><DateCreated>Wed, 14 Dec 2016 14:55:13 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:55:13 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMbd63e2347288445ba56b423154dcbe91</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMbd63e2347288445ba56b423154dcbe91</Sid><DateCreated>Wed, 14 Dec 2016 14:55:13 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:55:13 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMbd63e2347288445ba56b423154dcbe91</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42760
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM09b7a1f0959740b18cc17bd2c00c6d27</Sid><DateCreated>Wed, 14 Dec 2016 14:57:01 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:57:01 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM09b7a1f0959740b18cc17bd2c00c6d27</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxx
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM09b7a1f0959740b18cc17bd2c00c6d27</Sid><DateCreated>Wed, 14 Dec 2016 14:57:01 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:57:01 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM09b7a1f0959740b18cc17bd2c00c6d27</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42763
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMaed5506f6e1744dc9bedb6877eb6f7f5</Sid><DateCreated>Wed, 14 Dec 2016 14:57:15 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:57:15 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMaed5506f6e1744dc9bedb6877eb6f7f5</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+delete from Stash where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+stashing key: XMASNAG for numberID 1
+resetting to zero: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMaed5506f6e1744dc9bedb6877eb6f7f5</Sid><DateCreated>Wed, 14 Dec 2016 14:57:15 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:57:15 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMaed5506f6e1744dc9bedb6877eb6f7f5</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42766
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM09e43ea740c94a23b04ef820c4c2e5f0</Sid><DateCreated>Wed, 14 Dec 2016 14:58:56 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:58:56 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM09e43ea740c94a23b04ef820c4c2e5f0</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM09e43ea740c94a23b04ef820c4c2e5f0</Sid><DateCreated>Wed, 14 Dec 2016 14:58:56 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:58:56 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM09e43ea740c94a23b04ef820c4c2e5f0</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42769
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM66332ad9ca664faabbf605202e2469e8</Sid><DateCreated>Wed, 14 Dec 2016 14:59:34 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:59:34 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM66332ad9ca664faabbf605202e2469e8</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SM66332ad9ca664faabbf605202e2469e8</Sid><DateCreated>Wed, 14 Dec 2016 14:59:34 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 14:59:34 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SM66332ad9ca664faabbf605202e2469e8</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42771
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMa2bcbe5580024a2d9e2663e45bd33818</Sid><DateCreated>Wed, 14 Dec 2016 15:00:19 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:00:19 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMa2bcbe5580024a2d9e2663e45bd33818</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+delete from Stash where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+stashing key: XMASNAG for numberID 1
+resetting to zero: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMa2bcbe5580024a2d9e2663e45bd33818</Sid><DateCreated>Wed, 14 Dec 2016 15:00:19 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:00:19 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMa2bcbe5580024a2d9e2663e45bd33818</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42774
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMaef3958f14f84a33894a6e80141714c4</Sid><DateCreated>Wed, 14 Dec 2016 15:11:07 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:11:07 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMaef3958f14f84a33894a6e80141714c4</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MAKE RESPAWN CALL: 15, mp3 name / text,+447403926555
+making group call to group id 15
+adding call track for 616,1,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMaef3958f14f84a33894a6e80141714c4</Sid><DateCreated>Wed, 14 Dec 2016 15:11:07 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:11:07 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMaef3958f14f84a33894a6e80141714c4</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, call not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 1 and TrackNumberID=1
+calltrackID = 42778
+CALLING +447971805821 from +447403926555 due to thread 616 
+URL: http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/adventureweb/adventureweb/timeline-caller.php?threadID=616&secret=12345abcdefg&CallTrackID=42778
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA3eac3acfaf88c6a2e56c5c6cabee34d1</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>respawn is bad with freq 0
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue+1 where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+increment: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 614
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 612
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 610
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 613
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 611
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+threadID 610 less than filter on XMASNAG,2
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing 2 < XMASNAG,2
+filter not pssed for -2- < -2-
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 613
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 611
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+threadID 610 less than filter on XMASNAG,2
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing 2 < XMASNAG,2
+filter not pssed for -2- < -2-
+marking timeline complete
+--------
+
+threadID 613 equial to filter on XMASNAG,3
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing is 2 = for XMASNAG,3
+filter not passed
+marking timeline complete
+--------
+threadID 611 equial to filter on XMASNAG,2
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing is 2 = for XMASNAG,2
+filter passed =
+kickoff children - to the relevent additional number
+..adding child 608
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+threadID 613 equial to filter on XMASNAG,3
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing is 2 = for XMASNAG,3
+filter not passed
+marking timeline complete
+--------
+threadID 611 equial to filter on XMASNAG,2
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing is 2 = for XMASNAG,2
+filter passed =
+kickoff children - to the relevent additional number
+..adding child 608
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+
+send SMS I said Please Be Patient... from +447403926555 to +447971805821
+adding call track for 608,13,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA3eac3acfaf88c6a2e56c5c6cabee34d1</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA3eac3acfaf88c6a2e56c5c6cabee34d1/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 13 and TrackNumberID=1
+calltrackID = 42779
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMd4a8942e0b664a6daf9e1cc5d4240a08</Sid><DateCreated>Wed, 14 Dec 2016 15:14:12 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:14:12 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>I said Please Be Patient...</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMd4a8942e0b664a6daf9e1cc5d4240a08</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+send SMS I said Please Be Patient... from +447403926555 to +447971805821
+adding call track for 608,14,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMd4a8942e0b664a6daf9e1cc5d4240a08</Sid><DateCreated>Wed, 14 Dec 2016 15:14:12 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:14:12 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>I said Please Be Patient...</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMd4a8942e0b664a6daf9e1cc5d4240a08</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 14 and TrackNumberID=1
+calltrackID = 42781
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMbf71aa276983436ab6521cd15d8308b7</Sid><DateCreated>Wed, 14 Dec 2016 15:14:13 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:14:13 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>I said Please Be Patient...</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMbf71aa276983436ab6521cd15d8308b7</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MAKE RESPAWN CALL: 15, mp3 name / text,+447403926555
+making group call to group id 15
+adding call track for 616,1,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMbf71aa276983436ab6521cd15d8308b7</Sid><DateCreated>Wed, 14 Dec 2016 15:14:13 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:14:13 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>I said Please Be Patient...</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMbf71aa276983436ab6521cd15d8308b7</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, call not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 1 and TrackNumberID=1
+calltrackID = 42785
+CALLING +447971805821 from +447403926555 due to thread 616 
+URL: http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/adventureweb/adventureweb/timeline-caller.php?threadID=616&secret=12345abcdefg&CallTrackID=42785
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA24d72bc2f8c5bf4410e1f3305315090c</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>respawn is bad with freq 0
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue+1 where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+increment: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 614
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 612
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 610
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MAKE RESPAWN CALL: 15, mp3 name / text,+447403926555
+making group call to group id 15
+adding call track for 616,1,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA24d72bc2f8c5bf4410e1f3305315090c</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA24d72bc2f8c5bf4410e1f3305315090c/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>, call not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 1 and TrackNumberID=1
+calltrackID = 42788
+CALLING +447971805821 from +447403926555 due to thread 616 
+URL: http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/adventureweb/adventureweb/timeline-caller.php?threadID=616&secret=12345abcdefg&CallTrackID=42788
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA71ac785f5f7813122d105daae09501d2</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>respawn is bad with freq 0
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue+1 where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+increment: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 614
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 612
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 610
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+delete from Stash where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+stashing key: XMASNAG for numberID 1
+resetting to zero: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS You have been reset. from +447403926555 to +447971805821
+adding call track for 603,2,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA71ac785f5f7813122d105daae09501d2</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA71ac785f5f7813122d105daae09501d2/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 2 and TrackNumberID=1
+calltrackID = 42791
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMf2259e1fbe614c85a88f5b7f65b69f98</Sid><DateCreated>Wed, 14 Dec 2016 15:19:06 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:19:06 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>You have been reset.</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMf2259e1fbe614c85a88f5b7f65b69f98</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+xxxxxxxxxxxx
+delete from Stash where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+stashing key: XMASNAG for numberID 1
+resetting to zero: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+adding 1 to group 15
+kickoff children - to the relevent additional number
+..adding child 0
+marking timeline complete
+--------
+send SMS Thanks for playing. Not everyone has got their cards yet - we'll text you soon from +447403926555 to +447971805821
+adding call track for 599,3,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMf2259e1fbe614c85a88f5b7f65b69f98</Sid><DateCreated>Wed, 14 Dec 2016 15:19:06 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:19:06 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>You have been reset.</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMf2259e1fbe614c85a88f5b7f65b69f98</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, SMS not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 3 and TrackNumberID=1
+calltrackID = 42793
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMa57889b63a2c489b9fb0067bf44134cd</Sid><DateCreated>Wed, 14 Dec 2016 15:19:20 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:19:20 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMa57889b63a2c489b9fb0067bf44134cd</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>marking timeline complete
+--------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+MAKE RESPAWN CALL: 15, mp3 name / text,+447403926555
+making group call to group id 15
+adding call track for 616,1,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><SMSMessage><Sid>SMa57889b63a2c489b9fb0067bf44134cd</Sid><DateCreated>Wed, 14 Dec 2016 15:19:20 +0000</DateCreated><DateUpdated>Wed, 14 Dec 2016 15:19:20 +0000</DateUpdated><DateSent/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><From>+447403926555</From><Body>Thanks for playing. Not everyone has got their cards yet - we'll text you soon</Body><Status>queued</Status><Direction>outbound-api</Direction><ApiVersion>2010-04-01</ApiVersion><Price/><PriceUnit>USD</PriceUnit><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/SMS/Messages/SMa57889b63a2c489b9fb0067bf44134cd</Uri><NumSegments>1</NumSegments></SMSMessage></TwilioResponse>, call not sent
+getting caltrackID with select max(TrackID) from CallTrack where TimeLineID = 1 and TrackNumberID=1
+calltrackID = 42796
+CALLING +447971805821 from +447403926555 due to thread 616 
+URL: http://ec2-176-34-195-123.eu-west-1.compute.amazonaws.com/adventureweb/adventureweb/timeline-caller.php?threadID=616&secret=12345abcdefg&CallTrackID=42796
+<?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA05a15b25601fb19d52fb37641eed5e01</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneNumberSid>PN948045ae4cfd8c167cbb7ca0c12a5b0f</PhoneNumberSid><Status>queued</Status><StartTime/><EndTime/><Duration/><Price/><PriceUnit>USD</PriceUnit><Direction>outbound-api</Direction><AnsweredBy/><ApiVersion>2010-04-01</ApiVersion><Annotation/><ForwardedFrom/><GroupSid/><CallerName/><Uri>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA05a15b25601fb19d52fb37641eed5e01</Uri><SubresourceUris><Notifications>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA05a15b25601fb19d52fb37641eed5e01/Notifications</Notifications><Recordings>/2010-04-01/Accounts/AC935d979c7df9408287fd1f2e11d7c7ed/Calls/CA05a15b25601fb19d52fb37641eed5e01/Recordings</Recordings></SubresourceUris></Call></TwilioResponse>respawn is bad with freq 0
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue+1 where NumberID = ? and StashKey = ? stashkey XMASNAG for numberID 1
+increment: XMASNAG for numberID 1
+kickoff children - to the relevent additional number
+..adding child 614
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 612
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+..adding child 610
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 613
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+update Stash set stashvalue=stashvalue-1 where NumberID = ? and StashKey = ? stashkey XMASNAG,3 for numberID 1
+decrement: XMASNAG,3 for numberID 1
+kickoff children - to the relevent additional number
+..adding child 611
+sq; is INSERT INTO TimeLine(ThreadId, ActivityTime, Completed, CompletedTime, Description, Notes, AdditionalNumberID) VALUES (?,datetime('now','+0 minutes'),?,?,?,?,?)
+marking timeline complete
+--------
+threadID 610 less than filter on XMASNAG,2
+filtering on -XMASNAG- for 1
+aaaa 2
+FILTER: comparing 2 < XMASNAG,2
+filter not pssed for -2- < -2-
+marking timeline complete
+--------
+x
+send SMS I said Please Be Patient... from +447403926555 to +447971805821
+adding call track for 608,13,1, <?xml version='1.0' encoding='UTF-8'?>
+<TwilioResponse><Call><Sid>CA05a15b25601fb19d52fb37641eed5e01</Sid><DateCreated/><DateUpdated/><ParentCallSid/><AccountSid>AC935d979c7df9408287fd1f2e11d7c7ed</AccountSid><To>+447971805821</To><ToFormatted>+447971805821</ToFormatted><From>+447403926555</From><FromFormatted>+447403926555</FromFormatted><PhoneN
