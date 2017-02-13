@@ -38,17 +38,17 @@ my $db = DBI->connect("dbi:SQLite:$db_location", "", "",
 
 
 
-#$db->do("DROP TABLE IF EXISTS Stash ");
-#$db->do("CREATE TABLE Stash (StashID INTEGER PRIMARY KEY, NumberID INTEGER,StashTime DATETIME, StashKey TEXT, StashValue TEXT )");
+$db->do("DROP TABLE IF EXISTS Stash ");
+$db->do("CREATE TABLE Stash (StashID INTEGER PRIMARY KEY, NumberID INTEGER,StashTime DATETIME, StashKey TEXT, StashValue TEXT )");
 
 
-#$db->do("alter table CallTrack add column RawText TEXT default ''");
-#$db->do("alter table Thread add column Active INTEGER default 1");
+$db->do("alter table CallTrack add column RawText TEXT default ''");
+$db->do("alter table Thread add column Active INTEGER default 1");
 
 
 #$db->do("INSERT INTO Action VALUES (13,'Inbound SIM', 'Number is irrelevant for this thread ',' ','This action describes what to do for an incoming SIM / web message. if the mp3/message field is not blank, then the child threads will only be spawned IF the text is found in the message')");
 #$db->do("INSERT INTO Action VALUES (14,'Callback SIM', 'wait ','until sending ','This action describes an outbound callback SIM message')");
-#$db->do("INSERT INTO Action VALUES (15,'Stash First Counts', ' ','not relevent','This action describes storing the most recent recieved message onto the stash')");
+$db->do("INSERT INTO Action VALUES (15,'Stash First Counts', ' ','not relevent','This action describes storing the most recent recieved message onto the stash')");
 $db->do("INSERT INTO Action VALUES (16,'Active Child Threads', ' ','not relevent','This action sets only its child threads to be active for its Twilio Number')");
 #$db->do("INSERT INTO  DefaultInboundThread values ('SIM',1) ");
 
